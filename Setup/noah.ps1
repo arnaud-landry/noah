@@ -1,5 +1,5 @@
 #64
-configuration demophp 
+configuration Noah 
 { 
     param 
     ( 
@@ -35,9 +35,9 @@ configuration demophp
         # Sql server
             [Parameter(Mandatory = $true)]
             [string] $SqlServerExpress2017Uri,
-        # WebappUri
+        # Noah
             [Parameter(Mandatory = $true)]
-            [string] $WebappUri
+            [string] $NoahUri
     ) 
     # Import the module that defines custom resources 
     $index ="
@@ -240,24 +240,24 @@ configuration demophp
                 uri = $SqlServerExpress2017Uri
                 DestinationPath = $SqlServerExpress2017
             }
-            # Download Webapp
-            $WebappZip  = Join-Path $PackageFolder "Webapp-Master.zip"
-            xRemoteFile WebappSrc
+            # Download NOAH
+            $NoahZip  = Join-Path $PackageFolder "Noah-Master.zip"
+            xRemoteFile NoahSrc
             {
-                uri = $WebappUri
-                DestinationPath = $WebappZip
+                uri = $NoahUri
+                DestinationPath = $NoahZip
             }
-            <#Archive WebappUnzip
+            <#Archive NoahUnzip
             {
-                Path = $WebappZip
+                Path = $NoahZip
                 Destination  = $PackageFolder
             }#>
     } 
 }
 
-demophp -nodename localhost `
-    -WebSiteName demophp `
-    -WebsitePath C:\inetpub\wwwroot\webapp `
+Noah -nodename localhost `
+    -WebSiteName noah `
+    -WebsitePath C:\inetpub\wwwroot\noah `
     -PackageFolder "C:\Packages" `
     -Vc14DownloadUri "https://github.com/arnaud-landry/noah/raw/master/src/vc14_redist_x64.zip" `
     -Php7DownloadUri "https://github.com/arnaud-landry/noah/raw/master/src/php-7.0.22-nts-Win32-VC14-x64.zip" `
@@ -265,5 +265,5 @@ demophp -nodename localhost `
     -Php7DestinationPath "C:\php" `
     -Php7ConfigurationUri "https://raw.githubusercontent.com/arnaud-landry/noah/master/php/php.ini" `
     -SqlServerExpress2017Uri "https://ib.adnxs.com/seg?add=1&redir=https%3A%2F%2Fgo.microsoft.com%2Ffwlink%2F%3FLinkID%3D799012" `
-    -WebappUri "https://github.com/banago/simple-php-website/archive/master.zip"
+    -NoahUri "https://github.com/giMini/NOAH/archive/master.zip"
 New-DscCheckSum -Path ".\" -Force
