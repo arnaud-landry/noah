@@ -1,5 +1,5 @@
-#64
-configuration Noah 
+#72
+configuration WebApp 
 { 
     param 
     ( 
@@ -35,20 +35,25 @@ configuration Noah
         # Sql server
             [Parameter(Mandatory = $true)]
             [string] $SqlServerExpress2017Uri,
-        # Noah
             [Parameter(Mandatory = $true)]
-            [string] $NoahUri
+            [string] $SqlServerExpress2017ConfigurationURI,
+        # WebApp
+            [Parameter(Mandatory = $true)]
+            [string] $WebAppUri
     ) 
     # Import the module that defines custom resources 
+    $TestVersion = "72"
+
     $index ="
     <html>
     <head>
         <title>My </title>
     </head>
     <body>
-        <BR><h1> Site : $WebSiteName Test64 </H1><BR2>
+        <BR><h1> Site : $WebSiteName : $TestVersion </H1><BR2>
     </body>
     </html> "
+
     $phpinfo = "<?php phpinfo(); ?>"
 
     Import-DscResource -ModuleName "PSDesiredStateConfiguration"
@@ -57,6 +62,7 @@ configuration Noah
     Import-DscResource -ModuleName "xNetworking" -moduleVersion "5.0.0.0"
     Import-DscResource -ModuleName "xWebAdministration" -moduleVersion "1.18.0.0"
     Import-DscResource -ModuleName "xphp" -moduleVersion "1.2.0.0"
+    #Import-DscResource -ModuleName "xsql" -moduleVersion "8.0.0.0"
 
     Node $NodeName 
     { 
@@ -140,124 +146,163 @@ configuration Noah
 
         # Install PHP
             # Install php 7
-            $Php7Zip = Join-Path $PackageFolder "php-7.0.22-nts-Win32-VC14-x64.zip"
-            xRemoteFile Php7Archive
-            {
-                uri = $Php7DownloadUri
-                DestinationPath = $Php7Zip
-            }
+                $Php7Zip = Join-Path $PackageFolder "php-7.0.22-nts-Win32-VC14-x64.zip"
+                xRemoteFile Php7Archive
+                {
+                    uri = $Php7DownloadUri
+                    DestinationPath = $Php7Zip
+                }
 
-            Archive Php7Unzip
-            {
-                Path = $Php7Zip
-                Destination  = $Php7DestinationPath
-                # DependsOn = [xRemoteFile]Php7Archive
-            }
+                Archive Php7Unzip
+                {
+                    Path = $Php7Zip
+                    Destination  = $Php7DestinationPath
+                    # DependsOn = [xRemoteFile]Php7Archive
+                }
 
             # Install php 7 Ext mssql
-            $Php7ExtZip = Join-Path $PackageFolder "php-7.0.22-nts-Win32-VC14-x64_sqlsrv.zip"
-            xRemoteFile Php7ExtArchive
-            {
-                uri = $Php7ExtDownloadUri
-                DestinationPath = $Php7ExtZip
-            }
-
-            Archive Php7ExtUnzip
-            {
-                Path = $Php7ExtZip
-                Destination  = "$($Php7DestinationPath)\ext\"
-                #DependsOn = [xRemoteFile]Php7ExtArchive
-            }
-
-            <# Configure PHP
-            if ($installMySqlExt )
-            {
-                # Make sure the MySql extention for PHP is in the main PHP path
-                File phpMySqlExt
+                $Php7ExtZip = Join-Path $PackageFolder "php-7.0.22-nts-Win32-VC14-x64_sqlsrv.zip"
+                xRemoteFile Php7ExtArchive
                 {
-                    SourcePath = "$($PHPDestinationPath)\ext\php_mysql.dll"
-                    DestinationPath = "$($PHPDestinationPath)\php_mysql.dll"
-                    Ensure = "Present"
-                    DependsOn = @("[Archive]PHP")
-                    MatchSource = $true
+                    uri = $Php7ExtDownloadUri
+                    DestinationPath = $Php7ExtZip
                 }
-            }
-            #>
-            # Make sure the php.ini is in the Php folder
-            $Php7Configuration = Join-Path $PackageFolder "php.ini"
-            xRemoteFile Php7IniSrc
-            {
-                uri = $Php7ConfigurationUri
-                DestinationPath = $Php7Configuration
-            }
 
-            File Php7Ini
-            {
-                Ensure = "Present" 
-                Type = "File" 
-                SourcePath = $Php7Configuration
-                DestinationPath = "$($Php7DestinationPath)\php.ini"  
-            }
+                Archive Php7ExtUnzip
+                {
+                    Path = $Php7ExtZip
+                    Destination  = "$($Php7DestinationPath)\ext\"
+                    #DependsOn = [xRemoteFile]Php7ExtArchive
+                }
+
+            # Install php 7 Ext mssql
+                <#if ($installMySqlExt )
+                {
+                    # Make sure the MySql extention for PHP is in the main PHP path
+                    File phpMySqlExt
+                    {
+                        SourcePath = "$($PHPDestinationPath)\ext\php_mysql.dll"
+                        DestinationPath = "$($PHPDestinationPath)\php_mysql.dll"
+                        Ensure = "Present"
+                        DependsOn = @("[Archive]PHP")
+                        MatchSource = $true
+                    }
+                }
+                #>
+
+            # Make sure the php.ini is in the Php folder
+                $Php7Configuration = Join-Path $PackageFolder "php.ini"
+                xRemoteFile Php7IniSrc
+                {
+                    uri = $Php7ConfigurationUri
+                    DestinationPath = $Php7Configuration
+                }
+
+                File Php7Ini
+                {
+                    Ensure = "Present" 
+                    Type = "File" 
+                    SourcePath = $Php7Configuration
+                    DestinationPath = "$($Php7DestinationPath)\php.ini"  
+                }
 
             # Make sure the php cgi module is registered with IIS
-            Script FastCGI-IIS
-            {
-                SetScript = 
-                { 
-                    $PhpCgi = 'C:\php\php-cgi.exe'
-                    New-WebHandler -Name "PHP-FastCGI" -Path "*.php" -Verb "*" -Modules "FastCgiModule" -ScriptProcessor $PhpCgi -ResourceType File
-                    $configPath = get-webconfiguration 'system.webServer/fastcgi/application' | where-object { $_.fullPath -eq $PhpCgi }
-                    if (!$pool) {
-                        add-webconfiguration 'system.webserver/fastcgi' -value @{'fullPath' = $PhpCgi }
-                    }                
-                }
-                TestScript = { 
-                $result = Get-WebHandler -Name "*php*"
-                    if([string]::IsNullOrEmpty($result))
-                    {
-                        return $false
+                Script FastCGI-IIS
+                {
+                    SetScript = 
+                    { 
+                        $PhpCgi = 'C:\php\php-cgi.exe'
+                        New-WebHandler -Name "PHP-FastCGI" -Path "*.php" -Verb "*" -Modules "FastCgiModule" -ScriptProcessor $PhpCgi -ResourceType File
+                        $configPath = get-webconfiguration 'system.webServer/fastcgi/application' | where-object { $_.fullPath -eq $PhpCgi }
+                        if (!$pool) {
+                            add-webconfiguration 'system.webserver/fastcgi' -value @{'fullPath' = $PhpCgi }
+                        }                
                     }
-                    else{
-                        return $true
+                    TestScript = { 
+                    $result = Get-WebHandler -Name "*php*"
+                        if([string]::IsNullOrEmpty($result))
+                        {
+                            return $false
+                        }
+                        else{
+                            return $true
+                        }
+                    
                     }
-                 
+                    GetScript = { @{ Result = (Get-WebHandler -Name "*php*") } }          
                 }
-                GetScript = { @{ Result = (Get-WebHandler -Name "*php*") } }          
-            }
 
             # Make sure the php binary folder is in the path
-            Environment PathPhp
+                Environment PathPhp
+                {
+                    Name = "Path"
+                    Value = ";$($Php7DestinationPath)"
+                    Ensure = "Present"
+                    Path = $true
+                }
+
+        # Download WebApp
+            $WebAppZip  = Join-Path $PackageFolder "WebApp-Master.zip"
+            xRemoteFile WebAppSrc
             {
-                Name = "Path"
-                Value = ";$($Php7DestinationPath)"
-                Ensure = "Present"
-                Path = $true
+                uri = $WebAppUri
+                DestinationPath = $WebAppZip
             }
-            # Download SQL server 2017 express
-            $SqlServerExpress2017 = Join-Path $PackageFolder "SQLServer2016-SSEI-Expr.exe"
-            xRemoteFile SqlServerExpress2017Src
+            Archive WebAppUnzip
             {
-                uri = $SqlServerExpress2017Uri
-                DestinationPath = $SqlServerExpress2017
-            }
-            # Download NOAH
-            $NoahZip  = Join-Path $PackageFolder "Noah-Master.zip"
-            xRemoteFile NoahSrc
-            {
-                uri = $NoahUri
-                DestinationPath = $NoahZip
-            }
-            <#Archive NoahUnzip
-            {
-                Path = $NoahZip
+                Path = $WebAppZip
                 Destination  = $PackageFolder
-            }#>
+            }
+            $WebsiteDir = Join-Path $PackageFolder "/simple-php-website-master"
+            File WebAppCopy
+            {
+                Ensure = "Present"  # You can also set Ensure to "Absent"
+                Type = "Directory" # Default is "File".
+                Recurse = $true # Ensure presence of subdirectories, too
+                SourcePath = $WebsiteDir
+                DestinationPath = $WebsitePath
+            }
+        # Install MSSQL
+            # Download SQL server 2017 express
+                $SqlServerExpress2017File = Join-Path $PackageFolder "SQLServer2016-SSEI-Expr.exe"
+                xRemoteFile SqlServerExpress2017Src
+                {
+                    uri = $SqlServerExpress2017Uri
+                    DestinationPath = $SqlServerExpress2017File
+                }
+            # Download SQL server 2017 express Configuration
+                $SqlServerExpress2017ConfigurationFile = Join-Path $PackageFolder "SQL2016Express-Configuration.ini"
+                xRemoteFile SqlServerExpress2017ConfigurationSrc
+                {
+                    uri = $SqlServerExpress2017ConfigurationURI
+                    DestinationPath = $SqlServerExpress2017ConfigurationFile
+                }
+            # Install SQL server 2017 express
+                Script Install-Sql
+                {
+                    SetScript = 
+                    { 
+                        C:\Packages\SQLServer2016-SSEI-Expr.exe /IAcceptSqlServerLicenseTerms /ConfigurationFile=C:\Packages\SQL2016Express-Configuration.ini /MediaPath=C:\Packages\SqlServer2016Setup
+                    }
+                    TestScript = { 
+                    $result = Get-Service | where {$_.Name -like "*MSSQL*"}
+                        if([string]::IsNullOrEmpty($result))
+                        {
+                            return $false
+                        }
+                        else{
+                            return $true
+                        }
+                    
+                    }
+                    GetScript = { @{ Result = (Get-Service | where {$_.Name -like "*MSSQL*"})  } }          
+                }
     } 
 }
 
-Noah -nodename localhost `
-    -WebSiteName noah `
-    -WebsitePath C:\inetpub\wwwroot\noah `
+WebApp -nodename localhost `
+    -WebSiteName WebApp `
+    -WebsitePath C:\inetpub\wwwroot\WebApp `
     -PackageFolder "C:\Packages" `
     -Vc14DownloadUri "https://github.com/arnaud-landry/noah/raw/master/src/vc14_redist_x64.zip" `
     -Php7DownloadUri "https://github.com/arnaud-landry/noah/raw/master/src/php-7.0.22-nts-Win32-VC14-x64.zip" `
@@ -265,5 +310,6 @@ Noah -nodename localhost `
     -Php7DestinationPath "C:\php" `
     -Php7ConfigurationUri "https://raw.githubusercontent.com/arnaud-landry/noah/master/php/php.ini" `
     -SqlServerExpress2017Uri "https://ib.adnxs.com/seg?add=1&redir=https%3A%2F%2Fgo.microsoft.com%2Ffwlink%2F%3FLinkID%3D799012" `
-    -NoahUri "https://github.com/giMini/NOAH/archive/master.zip"
+    -SqlServerExpress2017ConfigurationURI "https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL2016Express-Configuration.ini" `
+    -WebAppUri "https://github.com/banago/simple-php-website/archive/master.zip"
 New-DscCheckSum -Path ".\" -Force
