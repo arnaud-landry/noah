@@ -13,3 +13,31 @@ workflow Noah {
     InlineScript { C:\Packages\Install-Modules.ps1 -xFunctionsPath $using:DownloadFolder\xFunctions.ps1 }
 }
 Noah
+
+<#
+    OUTPUT
+    PS C:\Dev> .\Worflow1.ps1
+
+        Directory: C:\
+    
+        Mode                LastWriteTime         Length Name                                PSComputerName
+    ----                -------------         ------ ----                                --------------
+    d-----       2017-08-23  11:49 PM                Packages                            localhost
+    C:\Packages\\Firefox created
+    C:\Packages\\iis created
+    C:\Packages\\Php created
+    C:\Packages\\Php already exist
+    C:\Packages\\Php already exist
+    C:\Packages\\Php already exist
+    C:\Packages\\Php already exist
+    Nuget already installed
+    PowershellGet already installed
+    PSGallery Trusted
+    Pester installed
+    PSScriptAnalyzer installed
+    xPSDesiredStateConfiguration installed
+    xWebAdministration installed
+    xPhp installed
+    xSQLServer installed
+    InvokeBuild installed
+#>
