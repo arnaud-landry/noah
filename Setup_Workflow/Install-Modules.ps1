@@ -13,12 +13,17 @@
         https://docs.microsoft.com/en-us/powershell/module/powershellget/install-module?view=powershell-5.1
         https://docs.microsoft.com/en-us/powershell/module/packagemanagement/install-packageprovider?view=powershell-5.1
     .NOTES 
-        # VERSION 1.0 [OK]
+        # VERSION 0.1 [WIP]
         # AUTHOR: Arnaud Landry [https://github.com/arnaud-landry]
 #>
+[CmdletBinding()]
+Param(
+    [Parameter(Mandatory=$true)]
+    [string] $xFunctionsPath
+)
 
 ### FUNCT
-    . C:\Install\xFunctions.ps1
+    . $xFunctionsPath
 
 ### VAR
     $ModulesList = @()  
