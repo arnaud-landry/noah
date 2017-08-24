@@ -62,7 +62,7 @@ Param(
         $AppName = $App[0]
         $AppDownloadFolder = $App[1]
         $AppUri = $App[2]
-        Write-Output "$AppName, $AppDownloadFolder, $AppUri"
+        #Write-Output "$AppName, $AppDownloadFolder, $AppUri"
         xCreate-Directory -DestinationPath $AppDownloadFolder
         xDownload-File -URI $AppUri -DestinationPath $AppDownloadFolder -FileName $AppName
     }
