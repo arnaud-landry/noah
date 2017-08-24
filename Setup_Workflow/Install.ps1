@@ -1,4 +1,3 @@
-# download only for now ...
 workflow Noah {
     Param(
         $DownloadFolder = "C:\Packages\"
