@@ -12,15 +12,21 @@
     .LINK 
         n/a
     .NOTES 
-        # VERSION 1.4 [OK]
+        # VERSION 0.1 [WIP]
         # AUTHOR: Arnaud Landry [https://github.com/arnaud-landry]
 #>
+[CmdletBinding()]
+Param(
+    [Parameter(Mandatory=$true)]
+    [string] $xFunctionsPath,
+    [Parameter(Mandatory=$true)]
+    [string] $DownloadFolder
+)
 
 ### FUNCT
-    . C:\Install\xFunctions.ps1
+    . $xFunctionsPath
 
 ### VAR
-    $DownloadFolder = "C:\Packages"
     $AppList = @()  
         # Firefox
         $AppList += ,@('Firefox-55-0-2.exe', "$DownloadFolder\Firefox", 'https://download.mozilla.org/?product=firefox-55.0.2-SSL&os=win64&lang=en-US')  
@@ -35,7 +41,7 @@
         $AppList += ,@('TestSql.php', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/TestSql.php')  
         $AppList += ,@('SMS-17-2-Setup.exe', "$DownloadFolder\Sql", 'https://go.microsoft.com/fwlink/?linkid=854085')  
         
-
+        <#
         #iis
         $AppList += ,@('index.html', "$DownloadFolder\iis", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/iis/index.html') 
 
@@ -49,6 +55,7 @@
         # Noah
         $AppList += ,@('noah-master.zip', "$DownloadFolder\Noah", 'https://github.com/giMini/NOAH/archive/master.zip')  
         $AppList += ,@('SQL-CreateNoahUser.sql', "$DownloadFolder\Noah", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL-CreateNoahUser.sql')  
+        #>
 
 ### MAIN
     foreach ($App in $AppList) {
