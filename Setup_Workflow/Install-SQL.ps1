@@ -18,8 +18,14 @@
         # AUTHOR: Arnaud Landry [https://github.com/arnaud-landry]
 #>
 
+[CmdletBinding()]
+Param(
+    [Parameter(Mandatory=$true)]
+    [string] $xFunctionsPath
+)
+
 ### FUNCT
-. C:\Install\xFunctions.ps1
+    . $xFunctionsPath
 
 ### VAR
     $SqlSaDefaultPassword="SA-PWD-CHANGEME-723387667"
