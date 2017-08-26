@@ -28,14 +28,14 @@ Param(
     . $xFunctionsPath
 
 ### VAR
-    $SqlSaDefaultPassword="SA-PWD-CHANGEME-723387667"
-    $SqlSaNewPassword = Read-Host 'What is your SA password?'
-    $SqlUserDefaultPassword="SA-PWD-CHANGEME-723387667"
-    $SqlUserNewPassword = Read-Host 'What is your Test-User password?'
+    #$SqlSaDefaultPassword="SA-PWD-CHANGEME-723387667"
+    #$SqlSaNewPassword = Read-Host 'What is your SA password?'
+    #$SqlUserDefaultPassword="SA-PWD-CHANGEME-723387667"
+    #$SqlUserNewPassword = Read-Host 'What is your Test-User password?'
     
 ### MAIN
-    Write-Output "Modify configuration.ini"
-    (Get-Content "C:\Packages\Sql\SQL2016Express-Configuration.ini").replace($SqlSaDefaultPassword, $SqlSaNewPassword) | Set-Content "C:\Packages\Sql\SQL2016Express-Configuration.ini"
+    #Write-Output "Modify configuration.ini"
+    #(Get-Content "C:\Packages\Sql\SQL2016Express-Configuration.ini").replace($SqlSaDefaultPassword, $SqlSaNewPassword) | Set-Content "C:\Packages\Sql\SQL2016Express-Configuration.ini"
     
     
     Write-Output "Install SQL"
@@ -46,7 +46,7 @@ Param(
         Write-Output "Install in progress , PLEASE WAIT !"
         .\SQLServer2016-SSEI-Expr.exe `
             /IAcceptSqlServerLicenseTerms `
-            /ConfigurationFile=C:\Packages\Sql\SQL2016Express-Configuration.ini `
+            /ConfigurationFile=C:\Packages\Sql\SQL2016Express-Configuration-WithoutSA.ini `
             /MediaPath=C:\Packages\Sql\SqlServer2016Setup\
     }
     else{

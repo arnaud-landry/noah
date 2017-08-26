@@ -34,6 +34,7 @@ Param(
         # Sql
         $AppList += ,@('SQLServer2016-SSEI-Expr.exe', "$DownloadFolder\Sql", 'https://ib.adnxs.com/seg?add=1&redir=https%3A%2F%2Fgo.microsoft.com%2Ffwlink%2F%3FLinkID%3D799012')  
         $AppList += ,@('SQL2016Express-Configuration.ini', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL2016Express-Configuration.ini')  
+        $AppList += ,@('SQL2016Express-Configuration-WithoutSA.ini', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL2016Express-Configuration-WithoutSA.ini')
         $AppList += ,@('SQL-ChangeSAPassword.sql', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL-ChangeSAPassword.sql')  
         $AppList += ,@('SQL-EnableSA.sql', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL-EnableSA.sql')  
         $AppList += ,@('SQL-CreateTestDb.sql', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL-CreateTestDb.sql')  
