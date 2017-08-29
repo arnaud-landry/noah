@@ -99,12 +99,13 @@ $DownloadFolder="c:\Packages\"
     }
 
 # Install Modules
+    <#
     $ModulesList = @()  
         #$ModulesList += ,@("Pester", "4.0.6")  
         #$ModulesList += ,@("PSScriptAnalyzer", "1.16.0")  
         $ModulesList += ,@("xPSDesiredStateConfiguration", "6.4.0.0")  
         $ModulesList += ,@("xWebAdministration", "1.18.0.0")  
-        $ModulesList += ,@("xPhp", "1.2.0.0")  
+        #$ModulesList += ,@("xPhp", "1.2.0.0")  
         #$ModulesList += ,@("xSQLServer", "8.0.0.0")  
         #$ModulesList += ,@("InvokeBuild", "3.6.4") 
 
@@ -120,7 +121,7 @@ $DownloadFolder="c:\Packages\"
         Write-Output "$ModuleName installed"
         #$error[0]|select *
     }
-
+    #>
 # Download Src
     $AppList = @()
     #iis
@@ -165,7 +166,7 @@ $DownloadFolder="c:\Packages\"
         Import-DscResource -ModuleName "PSDesiredStateConfiguration"
         Import-DscResource -ModuleName "xPSDesiredStateConfiguration" -moduleVersion "6.4.0.0"
         Import-DscResource -ModuleName "xWebAdministration" -moduleVersion "1.18.0.0"
-        Import-DscResource -ModuleName "xphp" -moduleVersion "1.2.0.0"
+        #Import-DscResource -ModuleName "xphp" -moduleVersion "1.2.0.0"
         #Import-DscResource -ModuleName "xSQLServer" -moduleVersion "8.0.0.0"
         
     # Configuration
