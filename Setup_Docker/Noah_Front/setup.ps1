@@ -195,7 +195,7 @@ $DownloadFolder="c:\Packages\"
                     Name            = "Default Web Site" 
                     State           = "Stopped" 
                     PhysicalPath    = "C:\inetpub\wwwroot" 
-                    DependsOn       = "[WindowsFeature]IIS" 
+                    DependsOn       = "[WindowsFeature]WebServer" 
                 }
             # Create WebSiteName Path and Default files (index.html, phpinfo.php and testsql.php)
                 File index
