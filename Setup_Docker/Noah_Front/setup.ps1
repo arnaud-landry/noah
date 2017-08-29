@@ -132,7 +132,13 @@ $DownloadFolder="c:\Packages\"
     $AppList += ,@('php-7.0.22-nts-Win32-VC14-x64_sqlsrv.zip', "$DownloadFolder\Php", 'https://github.com/arnaud-landry/noah/raw/master/src/php-7.0.22-nts-Win32-VC14-x64_sqlsrv.zip')  
     $AppList += ,@('php.ini', "$DownloadFolder\Php", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/php/php.ini') 
     $AppList += ,@('phpinfo.php', "$DownloadFolder\Php", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/php/phpinfo.php') 
-    foreach ($App in $AppList) {
+    # Noah
+    $AppList += ,@('noah-master.zip', "$DownloadFolder\Noah", 'https://github.com/giMini/NOAH/archive/master.zip')  
+    #iis
+    $AppList += ,@('index.html', "$DownloadFolder\iis", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/iis/index.html') 
+    $AppList += ,@('TestSql.php', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/TestSql.php')  
+    
+    Foreach ($App in $AppList) {
         $AppName = $App[0]
         $AppDownloadFolder = $App[1]
         $AppUri = $App[2]
