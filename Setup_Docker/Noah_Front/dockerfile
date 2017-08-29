@@ -1,10 +1,8 @@
 FROM microsoft/iis
 
-RUN mkdir C:\noah
-
 RUN powershell -NoProfile -Command \
-    Import-module IISAdministration; \
-    New-IISSite -Name "noah" -PhysicalPath C:\noah -BindingInformation "*:8000:"
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/Noah_Front/setup.ps1 -OutFile c:\setup.ps1; \
+    c:\setup.ps1
 
 EXPOSE 8000
 
