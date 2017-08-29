@@ -108,8 +108,8 @@ $DownloadFolder="c:\Packages\"
         #$ModulesList += ,@("xSQLServer", "8.0.0.0")  
         #$ModulesList += ,@("InvokeBuild", "3.6.4") 
 
-    xInstall-PackageProvider "Nuget"
-    xInstall-PackageProvider "PowershellGet"
+    #xInstall-PackageProvider "Nuget"
+    #xInstall-PackageProvider "PowershellGet"
     Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
     Write-Output "PSGallery Trusted"
 
