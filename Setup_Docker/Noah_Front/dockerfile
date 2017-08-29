@@ -1,0 +1,11 @@
+FROM microsoft/iis
+
+RUN mkdir C:\noah
+
+RUN powershell -NoProfile -Command \
+    Import-module IISAdministration; \
+    New-IISSite -Name "noah" -PhysicalPath C:\noah -BindingInformation "*:8000:"
+
+EXPOSE 8000
+
+COPY index.html C:\noah\

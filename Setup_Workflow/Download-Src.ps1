@@ -56,7 +56,7 @@ Param(
         $AppList += ,@('noah-master.zip', "$DownloadFolder\Noah", 'https://github.com/giMini/NOAH/archive/master.zip')  
         $AppList += ,@('SQL-CreateNoahUser.sql', "$DownloadFolder\Noah", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/SQL-CreateNoahUser.sql')  
         #>
-
+        # VSCODE https://go.microsoft.com/fwlink/?Linkid=852157
 ### MAIN
     foreach ($App in $AppList) {
         $AppName = $App[0]
