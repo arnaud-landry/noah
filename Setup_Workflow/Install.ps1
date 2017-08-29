@@ -1,14 +1,37 @@
-# http://powershelldistrict.com/powershell-workflows/
-
+<#  
+    .SYNOPSIS 
+        This script install Noah (Front, Back, Db) and requirements (IIS + PHP + MSSQL).
+    .DESCRIPTION 
+        Download Src
+        Install Modules
+        Install MSSQL
+        Install IIS
+        Install PHP 7 + Ext
+        Deploy Noah Front
+        Deploy Noah Back
+    .INPUTS
+        n/a
+    .OUTPUTS
+        n/a
+    .EXAMPLE
+        .\Install-Modules.ps1
+    .LINK 
+        http://powershelldistrict.com/powershell-workflows/
+    .NOTES 
+        # VERSION 0.1 [WIP]
+        # AUTHOR: Arnaud Landry [https://github.com/arnaud-landry]
+#>
 workflow Noah {
     Param(
         $DownloadFolder = "C:\Packages\" #replace in InlineScipt if modified !
        )
-    Remove-Item $DownloadFolder -Force -Recurse
-    New-Item -Type Directory $DownloadFolder 
+    #Remove-Item $DownloadFolder -Force -Recurse
+    #New-Item -Type Directory $DownloadFolder 
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Workflow/xFunctions.ps1" -OutFile "$DownloadFolder\xFunctions.ps1"
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Workflow/Download-Src.ps1" -OutFile "$DownloadFolder\Download-Src.ps1"
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Workflow/Install-Modules.ps1" -OutFile "$DownloadFolder\Install-Modules.ps1"
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Workflow/Install-SQL.ps1" -OutFile "$DownloadFolder\Install-SQL.ps1"
+    
     InlineScript { C:\Packages\Download-Src.ps1 -xFunctionsPath $using:DownloadFolder\xFunctions.ps1 -DownloadFolder $using:DownloadFolder }
     InlineScript { C:\Packages\Install-Modules.ps1 -xFunctionsPath $using:DownloadFolder\xFunctions.ps1 }
 }
