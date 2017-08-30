@@ -187,7 +187,7 @@ $DownloadFolder="c:\Packages\"
                 foreach ($Feature in @("Web-Mgmt-Tools","web-Default-Doc", `
                         "Web-Dir-Browsing","Web-Http-Errors","Web-Static-Content",`
                         "Web-Http-Logging","web-Stat-Compression","web-Filtering",`
-                        "web-CGI","web-ISAPI-Ext","web-ISAPI-Filter","Web-Asp-Net45","Web-Mgmt-Service","Web-Mgmt-Console"))
+                        "web-CGI","web-ISAPI-Ext","web-ISAPI-Filter","Web-Asp-Net45","Web-Mgmt-Service"))
                 {
                     WindowsFeature "$Feature$Number"
                     {
