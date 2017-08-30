@@ -183,17 +183,19 @@ $DownloadFolder="c:\Packages\"
                 { 
                     Ensure          = "Present" 
                     Name            = "Web-Server" 
-                } 
-                WindowsFeature WebDirBrowsing 
-                { 
-                    Ensure          = "Present" 
-                    Name            = "Web-Dir-Browsing" 
                 }
-                WindowsFeature webCGI 
-                { 
-                    Ensure          = "Present" 
-                    Name            = "web-CGI" 
-                }           
+                foreach ($Feature in @("Web-Mgmt-Tools","web-Default-Doc", `
+                        "Web-Dir-Browsing","Web-Http-Errors","Web-Static-Content",`
+                        "Web-Http-Logging","web-Stat-Compression","web-Filtering",`
+                        "web-CGI","web-ISAPI-Ext","web-ISAPI-Filter","Web-Asp-Net45","Web-Mgmt-Service","Web-Mgmt-Console"))
+                {
+                    WindowsFeature "$Feature$Number"
+                    {
+                        Ensure       = "Present"
+                        Name         = $Feature
+                        DependsOn    = "[WindowsFeature]Web-Server" 
+                    }
+                }     
             # Stop the default website 
                 xWebsite StopDefaultSite  
                 { 
