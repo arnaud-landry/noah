@@ -323,7 +323,7 @@ $DownloadFolder="c:\Packages\"
     Write-Output "Build Configuration"
     IISPHP -nodename "localhost" `
         -WebSiteName "noah" `
-        -WebsitePath "C:\noah" `
+        -WebsitePath "C:\inetpub\wwwroot\noah" `
         -PackageFolder "C:\Packages" `
         -Php7DestinationPath "C:\php"
     Write-Output "Create Checksum"
