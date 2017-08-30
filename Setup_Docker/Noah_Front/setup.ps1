@@ -242,7 +242,7 @@ $DownloadFolder="c:\Packages\"
                     DependsOn       = "[File]index" 
                 }
             # Install VC14
-                $Vc14Zip = Join-Path $PackageFolder "\php\vc14_redist_x64.zip"
+            <#    $Vc14Zip = Join-Path $PackageFolder "\php\vc14_redist_x64.zip"
                 $Vc14Unzip = Join-Path $PackageFolder "\php\"
                 Archive Vc14Unzip
                 {
@@ -258,7 +258,7 @@ $DownloadFolder="c:\Packages\"
                     Path = $Vc14Exe
                     ProductId = ''
                     Arguments = '/install /passive /norestart' # silent mode
-                }
+                } #>
             # Install PHP
                 $Php7Zip = Join-Path $PackageFolder "\php\php-7.0.22-nts-Win32-VC14-x64.zip"
                 Archive Php7Unzip
