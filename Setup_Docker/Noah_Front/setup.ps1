@@ -193,7 +193,7 @@ $DownloadFolder="c:\Packages\"
                     {
                         Ensure       = "Present"
                         Name         = $Feature
-                        DependsOn    = "[WindowsFeature]Web-Server" 
+                        DependsOn    = "[WindowsFeature]WebServer" 
                     }
                 }     
             # Stop the default website 
