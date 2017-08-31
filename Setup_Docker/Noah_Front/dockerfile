@@ -13,6 +13,8 @@ RUN powershell -Command \
     Install-Module xPSDesiredStateConfiguration -RequiredVersion "6.4.0.0" -Force -SkipPublisherCheck; \
     Install-Module xWebAdministration -RequiredVersion "1.18.0.0" -Force -SkipPublisherCheck; \
     choco install vcredist2015 -y
+    choco install sqlserver-odbcdriver
+    choco install vim -y
 
 # Run setup
 RUN powershell -executionpolicy bypass -NoProfile -Command \

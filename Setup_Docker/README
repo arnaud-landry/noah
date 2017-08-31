@@ -1,2 +1,6 @@
 https://social.technet.microsoft.com/wiki/contents/articles/34147.nano-server-deploying-php-7-0-6-on-internet-information-services-iis-web-server.aspx
 https://stackoverflow.com/questions/26504846/copy-directory-to-other-directory-at-docker-using-add-command
+https://blog.docker.com/2016/09/build-your-first-docker-windows-server-container/
+https://github.com/friism/MusicStore/blob/master/Dockerfile.windows
+https://store.docker.com/images/mssql-server-windows-express
+https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms

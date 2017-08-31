@@ -9,18 +9,34 @@ docker rm $(docker ps -a -q)
 
 docker rmi f783441f347c --force
 
-
-docker run -t --name noah arnaudlandry/noahfront
+front/back : docker run -t --name noah arnaudlandry/noahfront
+sql : docker run -t -p 1433:1433 -e sa_password=YouKnowMe! -e ACCEPT_EULA=Y microsoft/mssql-server-windows-express
 
 docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noah
 
+docker exec -ti noah powershell
+docker exec -ti cocky_euclid powershell
 
-## Error
- ---> 3881c658b3d2
-Removing intermediate container 706a4bf088e4
-Step 6/8 : RUN C:\php\php-cgi.exe -f C:\noah\phpinfo.php
- ---> Running in 76ef68a40cba
-No input file specified.
-PHP Warning:  Unknown: open_basedir restriction in effect. File(C:\noah\phpinfo.php) is not within the allowed path(s): (C:\inetpub\wwwroot) in Unknown on line 0
-PHP Warning:  Unknown: failed to open stream: Operation not permitted in Unknown on line 0
-The command 'powershell -Command $ErrorActionPreference = 'Stop'; C:\php\php-cgi.exe -f C:\noah\phpinfo.php' returned a non-zero code: 1
+
+$uri="https://raw.githubusercontent.com/giMini/NOAH/master/generateDatabase/NOAH_generation.sql"
+$file="NOAH_generation.sql"
+Invoke-WebRequest -Uri $uri -OutFile $file
+sqlcmd -S localhost\SQLEXPRESS -i NOAH_generation.sql
+
+/Generate_WhiteList.sql
+sqlcmd -S localhost\SQLEXPRESS -i .\Generate_WhiteList.sql
+
+/Generate_VT.sql
+sqlcmd -S localhost\SQLEXPRESS -i .\Generate_VT.sql
+
+<?php
+$serverName = "192.168.17.246\SQLEXPRESS"; //serverName\instanceName
+$connectionInfo = array("Database"=>"NOAH","UID" => "SA","PWD" => "YouKnowMe!",);
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+if( $conn ) {
+     echo "Connection established.<br />";
+}else{
+     echo "Connection could not be established.<br />";
+     die( print_r( sqlsrv_errors(), true));
+}
