@@ -8,3 +8,5 @@ https://blog.docker.com/2016/09/build-your-first-docker-windows-server-container
 https://github.com/friism/MusicStore/blob/master/Dockerfile.windows
 https://store.docker.com/images/mssql-server-windows-express
 https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
+
+https://docs.docker.com/engine/reference/commandline/commit/#commit-a-container-with-new-cmd-and-expose-instructions

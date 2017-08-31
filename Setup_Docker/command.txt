@@ -13,11 +13,52 @@ front/back : docker run -t --name noah arnaudlandry/noahfront
 sql : docker run -t -p 1433:1433 -e sa_password=YouKnowMe! -e ACCEPT_EULA=Y microsoft/mssql-server-windows-express
 
 docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noah
+docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" $(docker ps -a -q)
 
-docker exec -ti noah powershell
-docker exec -ti cocky_euclid powershell
+docker exec -ti noahfront powershell
+docker exec -ti noahdb powershell
 
 
+docker start  `docker ps -q -l` # restart it in the background
+docker attach `docker ps -q -l` # reattach the terminal & stdin
+    docker start start a container (requires name or ID)
+    -a attach to container
+    -i interactive mode
+    docker ps List containers 
+    -q list only container IDs
+    -l list only last created container
+
+docker start $(docker ps -a -q --filter "status=exited")
+This will start all container which are in exited state.
+
+docker exec -it <container-id> /bin/bash
+This will connect to the particular container
+
+docker start  `docker ps -a -q --filter "name=elas"`
+If you want to continue exactly one docker with a known name:
+
+docker commit c3f279d17e0a  svendowideit/testimage:version3
+Commit a container
+
+Windows Container must be stopped to commit !
+https://stackoverflow.com/questions/40074628/windows-container-how-to-commit-a-container
+(docker ps -a)
+    CONTAINER ID        IMAGE                                    COMMAND                    CREATED             STATUS              PORTS                    NAMES
+    27cce44ea0ac        microsoft/mssql-server-windows-express   "cmd /S /C 'powers..."     15 hours ago        Up 14 minutes       0.0.0.0:1433->1433/tcp   cocky_euclid
+    7efc9717e1f8        arnaudlandry/noahfront                   "c:\\windows\\system..."   16 hours ago        Up 13 minutes       8000/tcp                 noah
+
+docker stop 27cce44ea0ac
+docker commit 27cce44ea0ac arnaudlandry/noahdb:version1
+docker images
+    REPOSITORY                               TAG                 IMAGE ID            CREATED             SIZE
+    arnaudlandry/noahdb                      version1            ef26de585fe2        6 seconds ago       12.4 GB
+    arnaudlandry/noahfront                   latest              08769697dc9b        16 hours ago        11.1 GB
+    microsoft/iis                            latest              4f803ffceb53        3 weeks ago         10.6 GB
+    microsoft/windowsservercore              latest              be84290c2315        3 weeks ago         10.3 GB
+    microsoft/mssql-server-windows-express   latest              eced86650f0f        5 weeks ago         12.1 GB
+---------------------------------------
+docker noahdb
+---------------------------------------
 $uri="https://raw.githubusercontent.com/giMini/NOAH/master/generateDatabase/NOAH_generation.sql"
 $file="NOAH_generation.sql"
 Invoke-WebRequest -Uri $uri -OutFile $file
