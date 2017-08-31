@@ -23,5 +23,3 @@ RUN C:\php\php-cgi.exe -f C:\inetpub\wwwroot\noah\phpinfo.php
 
 # Expose port 8000
 EXPOSE 8000
-
-COPY master C:\inetpub\wwwroot\noah\
