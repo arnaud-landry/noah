@@ -1,0 +1,26 @@
+docker build -t arnaudlandry/noahfront .
+
+docker images
+
+docker ps -a
+
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+docker rmi f783441f347c --force
+
+
+docker run -t --name noah arnaudlandry/noahfront
+
+docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noah
+
+
+## Error
+ ---> 3881c658b3d2
+Removing intermediate container 706a4bf088e4
+Step 6/8 : RUN C:\php\php-cgi.exe -f C:\noah\phpinfo.php
+ ---> Running in 76ef68a40cba
+No input file specified.
+PHP Warning:  Unknown: open_basedir restriction in effect. File(C:\noah\phpinfo.php) is not within the allowed path(s): (C:\inetpub\wwwroot) in Unknown on line 0
+PHP Warning:  Unknown: failed to open stream: Operation not permitted in Unknown on line 0
+The command 'powershell -Command $ErrorActionPreference = 'Stop'; C:\php\php-cgi.exe -f C:\noah\phpinfo.php' returned a non-zero code: 1

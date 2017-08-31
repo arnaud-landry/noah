@@ -241,24 +241,6 @@ $DownloadFolder="c:\Packages\"
                                     } 
                     DependsOn       = "[File]index" 
                 }
-            # Install VC14
-            <#    $Vc14Zip = Join-Path $PackageFolder "\php\vc14_redist_x64.zip"
-                $Vc14Unzip = Join-Path $PackageFolder "\php\"
-                Archive Vc14Unzip
-                {
-                    Path = $Vc14Zip
-                    Destination  = $Vc14Unzip
-                    #DependsOn = [xRemoteFile]Vc14Archive
-                }
-                $Vc14Exe = Join-Path $PackageFolder "\php\vc_redist_x64.exe"
-                Package Vc14Exe
-                {
-                    Ensure = "Present"
-                    Name = "Microsoft Visual C++ 2015 Redistributable (x64) - 14.0.24212"
-                    Path = $Vc14Exe
-                    ProductId = ''
-                    Arguments = '/install /passive /norestart' # silent mode
-                } #>
             # Install PHP
                 $Php7Zip = Join-Path $PackageFolder "\php\php-7.0.22-nts-Win32-VC14-x64.zip"
                 Archive Php7Unzip
@@ -330,3 +312,20 @@ $DownloadFolder="c:\Packages\"
     New-DscCheckSum -Path ".\IISPHP\" -Force
     Write-Output "Apply Configuration"
     Start-DscConfiguration -Path .\IISPHP -Verbose -Wait -Force
+    # Unzip archive
+    Write-Output "Unzip Noah Archive"
+    cd C:\Packages\Noah\
+    expand-archive -path 'C:\Packages\Noah\noah-master.zip' -destinationpath 'C:\Packages\Noah\'
+    # Flush generateDatabase folder
+    Write-Output "Flush generateDatabase folder"    
+    Remove-Item "C:\Packages\Noah\NOAH-master\generateDatabase\" -Force -Recurse
+    # Flush setup folder
+    Write-Output "Flush setup folder"    
+    Remove-Item "C:\Packages\Noah\NOAH-master\setup\" -Force -Recurse
+    # Flush Backend folder
+    Write-Output "Flush backend folder"    
+    Remove-Item "C:\Packages\Noah\NOAH-master\Backend\" -Force -Recurse
+    # Copy source to inetpub
+    Write-Output "move code to intepub"
+    Move-Item C:\Packages\Noah\NOAH-master\* -Destination C:\inetpub\wwwroot\noah\ -Force
+    Pause
