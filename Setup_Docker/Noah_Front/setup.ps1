@@ -136,7 +136,7 @@ $DownloadFolder="c:\Packages\"
     $AppList += ,@('noah-master.zip', "$DownloadFolder\Noah", 'https://github.com/giMini/NOAH/archive/master.zip')  
     #iis
     $AppList += ,@('index.html', "$DownloadFolder\iis", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/iis/index.html') 
-    $AppList += ,@('TestSql.php', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/sql/TestSql.php')  
+    $AppList += ,@('TestSql.php', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/TestSql.php')  
     
     Foreach ($App in $AppList) {
         $AppName = $App[0]
