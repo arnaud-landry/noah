@@ -18,8 +18,8 @@
 
 # Run noah
     # note : C:\Program Files\Docker\Docker\Resources\bin\docker.exe: Error response from daemon: failed to create endpoint noahfront on network nat: Windows does not support host IP addresses in NAT settings.
-    docker run -t -h noahfront --name noahfront -p 8000:8000 arnaudlandry/noahfront
-    docker run -t -h noahdb --name noahdb -p 1433:1433 -e sa_password=C01aL({L7lnqGtu5pe1Mqbu1FSQN>U_U -e ACCEPT_EULA=Y arnaudlandry/noahdb
+    docker run -ti -h noahdb --name noahdb -p 1433:1433 -e sa_password=5c4fdc6a501864b89d8a6576bd9dbb90 -e ACCEPT_EULA=Y arnaudlandry/noahdb powershell
+    docker run -ti -h noahfront --name noahfront -p 8000:8000 arnaudlandry/noahfront powershell
 
 # Find IPs
     docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" $(docker ps -a -q)

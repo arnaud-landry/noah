@@ -309,7 +309,9 @@ $DownloadFolder="c:\Packages\"
     Write-Output "Create Checksum"
     New-DscCheckSum -Path ".\IISPHP\" -Force
     Write-Output "Apply Configuration"
-    Start-DscConfiguration -Path .\IISPHP -Verbose -Wait -Force
+    #Start-DscConfiguration -Path .\IISPHP -Verbose -Wait -Force
+    Start-DscConfiguration -Path .\IISPHP -Wait -Force
+    Test-DscConfiguration
 
     # Unzip archive
     Write-Output "Unzip Noah Archive"
@@ -336,6 +338,6 @@ $DownloadFolder="c:\Packages\"
     # Modify connection.php
     Write-Output "modify connection.php"
     $NoahConn = "C:\inetpub\wwwroot\noah\connection.php"
-    (Get-Content $NoahConn).replace("P@ssword3!", "C01aL({L7lnqGtu5pe1Mqbu1FSQN>U_U") | Set-Content $NoahConn
+    (Get-Content $NoahConn).replace("P@ssword3!", "5c4fdc6a501864b89d8a6576bd9dbb90") | Set-Content $NoahConn
     (Get-Content $NoahConn).replace("Administrator", "SA") | Set-Content $NoahConn
     (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
