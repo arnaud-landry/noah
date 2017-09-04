@@ -312,20 +312,24 @@ $DownloadFolder="c:\Packages\"
     New-DscCheckSum -Path ".\IISPHP\" -Force
     Write-Output "Apply Configuration"
     Start-DscConfiguration -Path .\IISPHP -Verbose -Wait -Force
+
     # Unzip archive
     Write-Output "Unzip Noah Archive"
     cd C:\Packages\Noah\
     expand-archive -path 'C:\Packages\Noah\noah-master.zip' -destinationpath 'C:\Packages\Noah\'
+
     # Flush generateDatabase folder
     Write-Output "Flush generateDatabase folder"    
     Remove-Item "C:\Packages\Noah\NOAH-master\generateDatabase\" -Force -Recurse
+
     # Flush setup folder
     Write-Output "Flush setup folder"    
     Remove-Item "C:\Packages\Noah\NOAH-master\setup\" -Force -Recurse
+
     # Flush Backend folder
     Write-Output "Flush backend folder"    
     Remove-Item "C:\Packages\Noah\NOAH-master\Backend\" -Force -Recurse
+
     # Copy source to inetpub
     Write-Output "move code to intepub"
     Move-Item C:\Packages\Noah\NOAH-master\* -Destination C:\inetpub\wwwroot\noah\ -Force
-    Pause
