@@ -331,3 +331,15 @@ $DownloadFolder="c:\Packages\"
     # Copy source to inetpub
     Write-Output "move code to intepub"
     Move-Item C:\Packages\Noah\NOAH-master\* -Destination C:\inetpub\wwwroot\noah\ -Force
+
+
+    # Modify connection.php
+    Write-Output "modify connection.php"
+    $NoahConn = "C:\inetpub\wwwroot\noah\connection.php"
+    (Get-Content $NoahConn).replace("P@ssword3!", "C01aL({L7lnqGtu5pe1Mqbu1FSQN>U_U") | Set-Content $NoahConn
+    (Get-Content $NoahConn).replace("Administrator", "SA") | Set-Content $NoahConn
+    (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
+
+
+    SqlNoahNewPassword
+    SqlNoahDb

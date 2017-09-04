@@ -155,4 +155,4 @@ New-Item -Type Directory "$DownloadFolder"
     $uri3="https://raw.githubusercontent.com/giMini/NOAH/master/generateDatabase/Generate_VT.sql"
     $file3="Generate_VT.sql"
     Invoke-WebRequest -Uri $uri3 -OutFile $file3
-    sqlcmd -S localhost\SQLEXPRESS -i .\$file3   
+    sqlcmd -S localhost\SQLEXPRESS -i .\$file3
