@@ -16,6 +16,7 @@
         # VERSION 0.1 [WIP]
         # AUTHOR: Arnaud Landry [https://github.com/arnaud-landry]
 #>
+
 [CmdletBinding()]
 Param(
     [Parameter(Mandatory=$true)]

@@ -9,8 +9,10 @@ docker rm $(docker ps -a -q)
 
 docker rmi f783441f347c --force
 
-front/back : docker run -t --name noah arnaudlandry/noahfront
-sql : docker run -t -p 1433:1433 -e sa_password=YouKnowMe! -e ACCEPT_EULA=Y microsoft/mssql-server-windows-express
+front/back : 
+    docker run -t --name noahfront arnaudlandry/noahfront
+sql : 
+    docker run -t --name noahdb -p 1433:1433 -e sa_password=YouKnowMe! -e ACCEPT_EULA=Y microsoft/mssql-server-windows-express
 
 docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noah
 docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" $(docker ps -a -q)
@@ -56,6 +58,8 @@ docker images
     microsoft/iis                            latest              4f803ffceb53        3 weeks ago         10.6 GB
     microsoft/windowsservercore              latest              be84290c2315        3 weeks ago         10.3 GB
     microsoft/mssql-server-windows-express   latest              eced86650f0f        5 weeks ago         12.1 GB
+
+    
 ---------------------------------------
 docker noahdb
 ---------------------------------------
