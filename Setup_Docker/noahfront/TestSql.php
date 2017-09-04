@@ -1,8 +1,7 @@
 <?php 
 $serverName = "noahdb\SQLEXPRESS"; //serverName\instanceName
-$connectionInfo = array("Database"=>"master","UID" => "SA","PWD" => "5c4_fdc6a50+1864b89d8a6576bd9dbb-90",);
+$connectionInfo = array("Database"=>"master","UID" => "SA","PWD" => "11586985851756998150",);
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
-
 if( $conn ) {
      echo "Connection established.<br />";
 }else{
