@@ -23,7 +23,7 @@ RUN powershell -executionpolicy bypass -NoProfile -Command \
     c:\setup.ps1
 
 # test php from cli
-RUN C:\php\php-cgi.exe -f C:\inetpub\wwwroot\noah\phpinfo.php
+RUN C:\php\php.exe -v
 
 # Expose port 8000
 EXPOSE 8000

@@ -124,8 +124,6 @@ $DownloadFolder="c:\Packages\"
     #>
 # Download Src
     $AppList = @()
-    #iis
-    $AppList += ,@('index.html', "$DownloadFolder\iis", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/iis/index.html') 
     # Php
     $AppList += ,@('vc14_redist_x64.zip', "$DownloadFolder\Php", 'https://github.com/arnaud-landry/noah/raw/master/src/vc14_redist_x64.zip')  
     $AppList += ,@('php-7.0.22-nts-Win32-VC14-x64.zip', "$DownloadFolder\Php", 'https://github.com/arnaud-landry/noah/raw/master/src/php-7.0.22-nts-Win32-VC14-x64.zip')  
@@ -134,9 +132,9 @@ $DownloadFolder="c:\Packages\"
     $AppList += ,@('phpinfo.php', "$DownloadFolder\Php", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/php/phpinfo.php') 
     # Noah
     $AppList += ,@('noah-master.zip', "$DownloadFolder\Noah", 'https://github.com/giMini/NOAH/archive/master.zip')  
-    #iis
-    $AppList += ,@('index.html', "$DownloadFolder\iis", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/iis/index.html') 
-    $AppList += ,@('TestSql.php', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/TestSql.php')  
+    #WebServer default files
+    $AppList += ,@('index.html', "$DownloadFolder\iis", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/noahfront/index.html') 
+    $AppList += ,@('TestSql.php', "$DownloadFolder\Sql", 'https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/noahfront/TestSql.php')  
     
     Foreach ($App in $AppList) {
         $AppName = $App[0]

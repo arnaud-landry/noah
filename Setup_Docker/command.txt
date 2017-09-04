@@ -1,24 +1,32 @@
-docker build -t arnaudlandry/noahfront .
+# List local images
+    docker images
 
-docker images
+# Build new image
+    docker build -t arnaudlandry/noahfront .
 
-docker ps -a
+# Remove image based on ID and force (kill running containers)
+    docker rmi f783441f347c --force
 
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+# List containers (running, exited ...)
+    docker ps -a
 
-docker rmi f783441f347c --force
+# Stop and Remove containers (all)
+    docker stop $(docker ps -a -q)
+    docker rm $(docker ps -a -q)
 
-front/back : 
+
+# Run noah
     docker run -t --name noahfront arnaudlandry/noahfront
-sql : 
     docker run -t --name noahdb -p 1433:1433 -e sa_password=YouKnowMe! -e ACCEPT_EULA=Y microsoft/mssql-server-windows-express
 
-docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noah
-docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" $(docker ps -a -q)
+# Find IPs
+    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" $(docker ps -a -q)
+    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noahfront
+    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" noahdb
 
-docker exec -ti noahfront powershell
-docker exec -ti noahdb powershell
+# Connect to containers
+    docker exec -ti noahfront powershell
+    docker exec -ti noahdb powershell
 
 
 docker start  `docker ps -q -l` # restart it in the background
