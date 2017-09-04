@@ -338,6 +338,6 @@ $DownloadFolder="c:\Packages\"
     # Modify connection.php
     Write-Output "modify connection.php"
     $NoahConn = "C:\inetpub\wwwroot\noah\connection.php"
-    (Get-Content $NoahConn).replace("P@ssword3!", "5c4fdc6a501864b89d8a6576bd9dbb90") | Set-Content $NoahConn
+    (Get-Content $NoahConn).replace("P@ssword3!", "5c4_fdc6a50+1864b89d8a6576bd9dbb-90") | Set-Content $NoahConn
     (Get-Content $NoahConn).replace("Administrator", "SA") | Set-Content $NoahConn
     (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
