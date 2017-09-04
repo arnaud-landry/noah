@@ -1,12 +1,31 @@
-DO NOT USE 
+* NOTES
+    * Front + DB only ! no BACKEND !
+    * Default password for SA sql (if you change it , modify connection.php on noahfront)
 
-WORK IN PROGRESS
+    * Tested on : 
+        * Windows 2016, Powershell 5.1 [Azure : Basic A3 : 4vcpu/7GB]
+        * Windows 10 Pro, Powershell 5.1 (Docker 17.06.1-ce, build 874a737)
+* HELP
+    * build (optional)
+        docker build -t arnaudlandry/noahdb .
+        docker build -t arnaudlandry/noahfront .
+    
+    * run 
+        docker pull arnaudlandry/noahdb
+        docker run -dit -h noahdb --name noahdb -p 1433:1433 -e sa_password="5c4_fdc6a50+1864b89d8a6576bd9dbb-90" -e ACCEPT_EULA=Y arnaudlandry/noahdb 
+        
+        docker pull arnaudlandry/noahfront
+        docker run -dit -h noahfront --name noahfront -p 8000:8000 arnaudlandry/noahfront
+    
+    * stop and remove
+        docker stop $(docker ps -a -q)
+        docker rm $(docker ps -a -q)
 
-https://social.technet.microsoft.com/wiki/contents/articles/34147.nano-server-deploying-php-7-0-6-on-internet-information-services-iis-web-server.aspx
-https://stackoverflow.com/questions/26504846/copy-directory-to-other-directory-at-docker-using-add-command
-https://blog.docker.com/2016/09/build-your-first-docker-windows-server-container/
-https://github.com/friism/MusicStore/blob/master/Dockerfile.windows
-https://store.docker.com/images/mssql-server-windows-express
-https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
-
-https://docs.docker.com/engine/reference/commandline/commit/#commit-a-container-with-new-cmd-and-expose-instructions
+* LINKS
+    https://social.technet.microsoft.com/wiki/contents/articles/34147.nano-server-deploying-php-7-0-6-on-internet-information-services-iis-web-server.aspx
+    https://stackoverflow.com/questions/26504846/copy-directory-to-other-directory-at-docker-using-add-command
+    https://blog.docker.com/2016/09/build-your-first-docker-windows-server-container/
+    https://github.com/friism/MusicStore/blob/master/Dockerfile.windows
+    https://store.docker.com/images/mssql-server-windows-express
+    https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
+    https://docs.docker.com/engine/reference/commandline/commit/#commit-a-container-with-new-cmd-and-expose-instructions
