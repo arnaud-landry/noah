@@ -19,7 +19,7 @@ RUN powershell -Command \
 
 # Run setup.ps1
 RUN powershell -executionpolicy bypass -NoProfile -Command \
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/Noah_Front/setup.ps1 -OutFile c:\setup.ps1; \
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/noahfront/setup.ps1 -OutFile c:\setup.ps1; \
     c:\setup.ps1
 
 # test php from cli
