@@ -339,7 +339,3 @@ $DownloadFolder="c:\Packages\"
     (Get-Content $NoahConn).replace("P@ssword3!", "C01aL({L7lnqGtu5pe1Mqbu1FSQN>U_U") | Set-Content $NoahConn
     (Get-Content $NoahConn).replace("Administrator", "SA") | Set-Content $NoahConn
     (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
-
-
-    SqlNoahNewPassword
-    SqlNoahDb
