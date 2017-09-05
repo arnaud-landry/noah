@@ -13,13 +13,14 @@ RUN powershell -Command \
     Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted; \
     Install-Module xPSDesiredStateConfiguration -RequiredVersion "6.4.0.0" -Force -SkipPublisherCheck; \
     Install-Module xWebAdministration -RequiredVersion "1.18.0.0" -Force -SkipPublisherCheck; \
+    Install-Module xPhp -RequiredVersion "1.2.0.0" -Force -SkipPublisherCheck; \
     choco install vcredist2015 -y; \
     choco install sqlserver-odbcdriver -y; \
     choco install vim -y
 
 # Run setup.ps1
 RUN powershell -executionpolicy bypass -NoProfile -Command \
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/noahfront/setup.ps1 -OutFile c:\setup.ps1; \
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/version2/Setup_Docker/noahfront/setup.ps1 -OutFile c:\setup.ps1; \
     c:\setup.ps1
 
 # test php from cli
