@@ -309,7 +309,8 @@ Param(
                 Environment PathPhp
                 {
                     Name = "Path"
-                    Value = ";$($Php7DestinationPath)"
+                    #Value = ";$($Php7DestinationPath)"
+                    Value = ";c:\php\"
                     Ensure = "Present"
                     Path = $true
                 }
