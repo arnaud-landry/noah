@@ -16,7 +16,7 @@ Param(
     [Parameter(Mandatory=$false)]
     [string] $DbUser="SA",
     [Parameter(Mandatory=$false)]
-    [string] $DbPassword="password"="11586985851756998150"
+    [string] $DbPassword="11586985851756998150"
 )
 
 # Functions
