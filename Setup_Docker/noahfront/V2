@@ -1,0 +1,5 @@
+docker build -t arnaudlandry/noahfront:version2 .
+
+docker run -dit -h noahfront --name noahfront -p 8000:8000 arnaudlandry/noahfront:version2
+
+docker exec -ti noahfront powershell

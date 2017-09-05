@@ -5,6 +5,8 @@
         * Add chocolatey support to DSC : https://github.com/chocolatey/cChoco/blob/development/ExampleConfig.ps1
         * Install package with DSC/Choco
         * remove useless feature from "# Install the IIS role "
+    # BUG
+        * PathPhp value fixed ...
 #>
 
 [CmdletBinding()]
@@ -284,8 +286,8 @@ Param(
                 {
                     SetScript = 
                     { 
-                        #$PhpCgi = 'C:\php\php-cgi.exe'
-                        $Php7Cgi = Join-Path $Php7DestinationPath "\php-cgi.exe"
+                        $Php7Cgi = 'C:\php\php-cgi.exe'
+                        #$Php7Cgi = Join-Path $Php7DestinationPath "\php-cgi.exe"
                         New-WebHandler -Name "PHP-FastCGI" -Path "*.php" -Verb "*" -Modules "FastCgiModule" -ScriptProcessor $Php7Cgi -ResourceType File
                         $configPath = get-webconfiguration 'system.webServer/fastcgi/application' | where-object { $_.fullPath -eq $Php7Cgi }
                         if (!$pool) {
@@ -309,8 +311,8 @@ Param(
                 Environment PathPhp
                 {
                     Name = "Path"
-                    #Value = ";$($Php7DestinationPath)"
-                    Value = ";c:\php\"
+                    Value = ";$($Php7DestinationPath)"
+                    #Value = ";c:\php\"
                     Ensure = "Present"
                     Path = $true
                 }
