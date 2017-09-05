@@ -328,7 +328,7 @@ Param(
             #-Php7DestinationPath "C:\php"
     # Apply Configuration IISPHP
         Write-Output "Apply Configuration"
-        Start-DscConfiguration -Path .\IISPHP -Wait -Force #-verbose
+        Start-DscConfiguration -Path .\IISPHP -Wait -Force -verbose
     # Test Configuration IISPHP
         Test-DscConfiguration
 # Deploy Noah
