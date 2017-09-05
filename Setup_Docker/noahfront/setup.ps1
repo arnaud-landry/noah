@@ -6,7 +6,7 @@
         * Install package with DSC/Choco
         * remove useless feature from "# Install the IIS role "
     # BUG
-        * PathPhp value fixed ...
+        * Php7Cgi value fixed ... fail with var
 #>
 
 [CmdletBinding()]
