@@ -17,6 +17,7 @@ param(
         (Get-Content $NoahConn).replace("Administrator", $DbUser) | Set-Content $NoahConn
         (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
     }
+#>
 
     $lastCheck = (Get-Date).AddSeconds(-2)
     while ($true) {
