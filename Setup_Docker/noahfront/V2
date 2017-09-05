@@ -1,6 +1,6 @@
 docker build -t arnaudlandry/noahfront:version2 .
 
-docker run -dit -h noahfront --name noahfront -p 8000:8000 arnaudlandry/noahfront:version2
+docker run -dit -h noahfront -e DbPassword="5c4_fdc6a50+1864b89d8a6576bd9dbb" -e DbUser="SA" --name noahfront -p 8000:8000 arnaudlandry/noahfront:version2
 
 docker exec -ti noahfront powershell
 

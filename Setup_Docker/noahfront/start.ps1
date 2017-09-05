@@ -17,3 +17,10 @@ param(
         (Get-Content $NoahConn).replace("Administrator", $DbUser) | Set-Content $NoahConn
         (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
     }
+
+    $lastCheck = (Get-Date).AddSeconds(-2)
+    while ($true) {
+        Get-EventLog -LogName Application -Source "W3SVC*" -After $lastCheck | Select-Object TimeGenerated, EntryType, Message
+        $lastCheck = Get-Date
+        Start-Sleep -Seconds 60
+    }

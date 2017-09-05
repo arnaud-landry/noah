@@ -1,6 +1,7 @@
 FROM microsoft/windowsservercore
 
-ENV sa_password _
+ENV DbUser _
+ENV DbPassword _
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
 
@@ -25,13 +26,13 @@ RUN powershell -executionpolicy bypass -NoProfile -Command \
     Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/version2/Setup_Docker/noahfront/setup.ps1 -OutFile c:\setup.ps1; \
     c:\setup.ps1
 RUN powershell -executionpolicy bypass -NoProfile -Command \
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/version2/Setup_Docker/noahfront/start.ps1 -OutFile c:\start.ps1;
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/version2/Setup_Docker/noahfront/start.ps1 -OutFile c:\start.ps1
+
+# Start script
+CMD .\start -DbUser $env:DbUser -DbPassword $env:DbPassword -Verbose
 
 # test php from cli
 RUN C:\php\php.exe -v
-
-# Start script
-CMD .\start -DbUser $env:DbUser -DbPassword $env:DbPassword
 
 # Expose port 8000
 EXPOSE 8000
