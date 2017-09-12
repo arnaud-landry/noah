@@ -1,13 +1,5 @@
 <#
-    # Version
-        2
-    # Todo
-        * Add chocolatey support to DSC : https://github.com/chocolatey/cChoco/blob/development/ExampleConfig.ps1
-        * Install package with DSC/Choco cChoco : https://github.com/chocolatey/cChoco/blob/development/ExampleConfig.ps1
-        * remove useless feature from "# Install the IIS role "
-        * add start file to set password and user for connection.php
-    # BUG
-        * Php7Cgi value fixed ... fail with var
+    DSC ONLY
 #>
 
 [CmdletBinding()]
@@ -330,43 +322,11 @@ Param(
             # 
         } 
     }
-# Build and Apply IISPHP desired state configuration (DSC)
-    # Change directory to DownloadFolder
-        Write-Output "Change directory to $DownloadFolder"
-        cd $DownloadFolder
-    # Build Configuration IISPHP
-        Write-Output "Build Configuration"
-        IISPHP -nodename "localhost" `
-            -PackageFolder $DownloadFolder
-            #-WebSiteName "noah" `
-            #-WebsitePath "C:\inetpub\wwwroot\noah" `
-            #-Php7DestinationPath "C:\php"
-    # Apply Configuration IISPHP
-        Write-Output "Apply Configuration"
-        Start-DscConfiguration -Path .\IISPHP -Wait -Force -verbose
-    # Test Configuration IISPHP
-        Test-DscConfiguration
-# Deploy Noah
-    # Unzip archive
-        Write-Output "Unzip Noah Archive"
-        cd C:\Packages\Noah\
-        expand-archive -path 'C:\Packages\Noah\noah-master.zip' -destinationpath 'C:\Packages\Noah\'
-    # Flush generateDatabase folder
-        Write-Output "Flush generateDatabase folder"    
-        Remove-Item "C:\Packages\Noah\NOAH-master\generateDatabase\" -Force -Recurse
-    # Flush setup folder
-        Write-Output "Flush setup folder"    
-        Remove-Item "C:\Packages\Noah\NOAH-master\setup\" -Force -Recurse
-    # Flush Backend folder
-        Write-Output "Flush backend folder"    
-        Remove-Item "C:\Packages\Noah\NOAH-master\Backend\" -Force -Recurse
-    # Copy source to inetpub
-        Write-Output "move code to intepub"
-        Move-Item C:\Packages\Noah\NOAH-master\* -Destination C:\inetpub\wwwroot\noah\ -Force
-    <# Modify connection.php
-        Write-Output "modify connection.php"
-        $NoahConn = "C:\inetpub\wwwroot\noah\connection.php"
-        (Get-Content $NoahConn).replace("P@ssword3!", $DbPassword) | Set-Content $NoahConn
-        (Get-Content $NoahConn).replace("Administrator", $DbUser) | Set-Content $NoahConn
-        (Get-Content $NoahConn).replace("SQL01", "noahdb") | Set-Content $NoahConn
-    #>
+
+# Build Configuration IISPHP
+    Write-Output "Build Configuration"
+    IISPHP -nodename "localhost" `
+        -PackageFolder $DownloadFolder
+        #-WebSiteName "noah" `
+        #-WebsitePath "C:\inetpub\wwwroot\noah" `
+        #-Php7DestinationPath "C:\php"

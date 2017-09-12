@@ -1,0 +1,23 @@
+FROM microsoft/mssql-server-windows-express
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
+
+# Install chocolatey
+RUN powershell -executionpolicy bypass -NoProfile -Command \
+    Invoke-WebRequest -Uri https://chocolatey.org/install.ps1 -OutFile c:\choco.ps1; \
+    c:\choco.ps1
+
+# Install modules (requirements for dsc) and tools (requirements for php/sql)
+RUN powershell -Command \
+    Install-PackageProvider Nuget -ForceBootstrap -Force; \
+    Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted; \
+    Install-Module xPSDesiredStateConfiguration -RequiredVersion "6.4.0.0" -Force -SkipPublisherCheck; \
+    choco install vim -y
+
+# Run setup.ps1
+RUN powershell -executionpolicy bypass -NoProfile -Command \
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/master/Setup_Docker/noahback/setup.ps1 -OutFile c:\setup.ps1; \
+    c:\setup.ps1
+
+# Expose port 1433
+#EXPOSE 3985
