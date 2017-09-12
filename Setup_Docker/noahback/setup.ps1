@@ -201,6 +201,29 @@ Param(
         Start-DscConfiguration -Path .\noahback -Wait -Force -verbose
     # Test Configuration IISPHP
         Test-DscConfiguration
+
+# Create secureKeyDatabase.key and autoPasswordDatabase.txt
+Write-Output "Create Keys"
+
+New-Item -Type Directory "C:\temp\PoshPortal\Keys\"
+$SqlNoahNewPassword = "5c4_fdc6a50+1864b89d8a6576bd9dbb-90"
+
+$KeyFile = "C:\temp\PoshPortal\Keys\secureKeyDatabase.key"
+$Key = New-Object Byte[] 32   # AES encryption only supports 128-bit (16 bytes), 192-bit (24 bytes) or 256-bit key (32 bytes) 
+[Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($Key)
+$Key | out-file $KeyFile
+
+$PasswordFile = "C:\temp\PoshPortal\Keys\autoPasswordDatabase.txt"
+$KeyFile = "C:\temp\PoshPortal\Keys\secureKeyDatabase.key"
+$Key = Get-Content $KeyFile
+$Password = $SqlNoahNewPassword | ConvertTo-SecureString -AsPlainText -Force
+$Password | ConvertFrom-SecureString -key $Key | Out-File $PasswordFile
+
+$NoahBackend = "C:\Noah\NOAH-master\Backend\NOAH.ps1"
+(Get-Content $NoahBackend).replace("NOAHAdmin", "noah") | Set-Content $NoahBackend
+(Get-Content $NoahBackend).replace("SQL01", "noahdb") | Set-Content $NoahBackend
+
+
 # Deploy Noah
     <#
         # Unzip archive

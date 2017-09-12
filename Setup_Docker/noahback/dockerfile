@@ -19,4 +19,8 @@ RUN powershell -executionpolicy bypass -NoProfile -Command \
     Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/version2/Setup_Docker/noahback/setup.ps1 -OutFile c:\setup.ps1; \
     c:\setup.ps1
 
-Expose port  5985
+RUN powershell -executionpolicy bypass -NoProfile -Command \
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/arnaud-landry/noah/version2/Setup_Docker/noahback/start.ps1 -OutFile c:\start.ps1
+
+# Start script
+CMD .\start -Verbose
