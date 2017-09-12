@@ -1,21 +1,70 @@
 * NOTES
     * latest = Version 1
     
-    * Version 1 : 
-        * Front + DB only ! 
-        * no BACKEND ! you have to run noah.ps1 somewhere else :)
-        * Data are not PERSISTANT ! demo only
+    * Version 1 : Ready (POC/Demo only)
+
+        * __Front__ : noahdront:version1
+
+        * __Database__ : noahdb:version1
+
+        * __Backend__ : NO, you'll have to run the backend "noah.ps1" somewhere else
+
+        * Tested on : 
+
+            * Windows 2016, Powershell 5.1 [Azure : Basic A3 : 4vcpu/7GB]
+
+            * Windows 10 Pro, Powershell 5.1 (Docker 17.06.1-ce, build 874a737) 
+        
+        * data are not persistant
+
         * SA password set by default, if you change it , modify connection.php on noahfront !
+  
+    * Version 2 : in progress
+
+        * __Front__ : noahdront:version2 
+
+        * __Database__ : noahdb:version2
+
+        * __Backend__ : noahback:version2
+
+        * Tested on : 
+
+            * Windows 2016, Powershell 5.1 [Azure : Basic A3 : 4vcpu/7GB]
+
+            * Windows 10 Pro, Powershell 5.1 (Docker version 17.06.2-ce, build cec0b72)
+
+        * add backend : noahback 
+
+        * fix SA password (autogen and ENV)
+
+        * add persistant data
     
-    * Version 2 : 
-        * in progress
-        * add BACKEND
-        * fix SA password (autogen)
-        * compose
-    
-    * Tested on : 
-        * Windows 2016, Powershell 5.1 [Azure : Basic A3 : 4vcpu/7GB]
-        * Windows 10 Pro, Powershell 5.1 (Docker 17.06.1-ce, build 874a737)
+    * Version 3 : to do
+        * __Front__ : noahdront:version3
+
+        * __Database__ : noahdb:version3
+
+        * __Backend__ : noahback:version3
+
+        * add TLS for noahfront (LetsEncrypt)
+
+        * fix sqlexpress licence mode
+
+        * add noahdb dedicated user
+
+        * replace ENV with SECRET
+
+        * docker compose
+
+        * ONE LINER TO PULL AND START CONTAINER
+
+    * Version 4 : to do
+
+        * vagrant env to test the slution
+
+    * Version 5 : to do
+
+        * add linux support as OS Base for noahfront, noahdb and noahback
 
 * USAGE
     docker pull arnaudlandry/noahdb:version1 
