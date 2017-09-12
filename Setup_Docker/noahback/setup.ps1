@@ -220,7 +220,7 @@ $Password = $SqlNoahNewPassword | ConvertTo-SecureString -AsPlainText -Force
 $Password | ConvertFrom-SecureString -key $Key | Out-File $PasswordFile
 
 $NoahBackend = "C:\Noah\NOAH-master\Backend\NOAH.ps1"
-(Get-Content $NoahBackend).replace("NOAHAdmin", "noah") | Set-Content $NoahBackend
+(Get-Content $NoahBackend).replace("NOAHAdmin", "sa") | Set-Content $NoahBackend
 (Get-Content $NoahBackend).replace("SQL01", "noahdb") | Set-Content $NoahBackend
 
 
